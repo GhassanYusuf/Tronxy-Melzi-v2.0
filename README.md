@@ -8,9 +8,9 @@ My story with this 3D printer, back in 2017 I bought two of these 3D printers in
 This repository is created for people who bought this 3D printer and got stuck with it, so this repository is all about upgrading the functionality of the TRONXY 3D printer and add an auto leveling feature to it and more.
 
 #### Note :
-This doesn't require you to change the board, you are going to deal with every thing that we have, you need to just add a probe and make a small circuit and 3D print one part that will hold the probe in place.
+This doesn't require you to change the board, you are going to deal with every thing that you have, you need to just add a probe and make a small circuit and 3D print one part that will hold the probe in place. then do the right changes in [Configuration.h](./Marlin-1.1.x/Marlin/Configuration.h) file in marlin firmware.
 
-## 1st What do you get with TRONXY DIY 3D printer kit
+## What do you get with TRONXY DIY 3D printer kit
 ![](./images/09.jpg)
 This 3D printer comes equipped with the following
 * [Melzi v2 Controller Board](https://reprap.org/wiki/Melzi)
@@ -46,13 +46,53 @@ This 3D printer comes equipped with the following
 8. Thing To Print To Make Your 3D Printer Look better
 
 ## 2. Build a voltage level translator circuit
+When you purchase a SN04 probe, you have to know that it works on a different voltage level than your micro controller that runs your 3D printer, so connecting it directly will trigger the magic smoke and fry your board, that's why we need to build a voltage level translate between the probe output voltage to our micro controller voltage. there are many ways to do it but I built it as simple as possible and it works perfectly. you might get it with a 3 pin JST connector
+
+![](./images/20.jpg)
+
+If it doesn't come with a 3 pin JST connector you have to find one do the wiring then proceed or If not then proceed to the following
+1. change the wires order in the connector use a sharp tool and press on the pin to push them out then change their order
+  * brown because the board will provide you with 12V DC from that pin
+  * black because the board will have GND connection Over There
+  * blue because that's where the GPIO of the trigger signal
+2. Move few centimeters away and cut the cord and strip the wires and make them ready for soldering
+3. Build the below circuit in the diagram
+
+![](./images/33.png)
+
+the PRB_ prefix means that's the wires from the probe side, the CON_ prefix means the wires that are in their current order on the 3 pin JST connector. and that's how it looks like
+
+![](./images/23.jpg)
+
+, then take some heat shrink tubing cover the circuit and heat it up to shrink the tube, and that's how it looks
+
+![](./images/24.jpg)
+
+now we need to move to the next step to test the probe behavior
 
 ## 3. Install the probe by connecting it to the board
+Turn the 3D printer power on, Install the probe in the Z end stop connector,  like the following picture ![](./images/32.jpg)
+
+Then To test the probe do the following
+1. Keep away from any metallic object, the probe light should be turned off.
+2. Put the probe very close to a metallic object the probe light will turn on.
+
+see the result in the following picture it should be what you get exactly
+![](./images/34.png)
+
+Now, Its time to test the result with GCODE commands
+
+1. Keep away from any metallic object, the probe light should be turned off, and in the command line terminal M119 then press enter, on the terminal the printer replies with the end stop status (OPEN) or (H) which means High
+2. Put the probe very close to a metallic object the probe light will turn on, and in the command line terminal M119 then press enter, on the terminal the printer replies with the end stop status (CLOSE) or (L) which means Low
+
+  * if that's the case, Then you are read to move on to the next step, preparing to burn Marlin firmware on to your board.
+  * if that's not the case, Then please check you circuit connections or your 3 pin JST connector if the wires are in the correct order.
 
 ## 4. Burning a bootloader in to Melzi v2 board with Anet A8 (opti boot)
+The board that you have originally don't have a bootloader, so it cant talk to your compiler to burn the firmware via USB like the Arduino does, so in order to make it accept new firmware through USB. we have to download some files to make Arduino environment to recognize the board as (Anet A8)
 
 ## 5. Configuring Marlin
-if you have bought the very same 3D printer with same T2 belts and same pully, here are some value you need to put in Configuration.h file in marlin folder to get the right movement distances.
+if you have bought the very same 3D printer with same T2 belts and same pully, here are some value you need to put in [Configuration.h](./Marlin-1.1.x/Marlin/Configuration.h) file in marlin folder to get the right movement distances.
 
 ### Parameters To Change
 These are some fixed parameters based on TRONXY 3D Printer build
@@ -114,18 +154,20 @@ These are some fixed parameters based on TRONXY 3D Printer build
 //#define E4_DRIVER_TYPE A4988
 ```
 #### Steps Per Millimeters - Line 611
+in case you have the same setup just copy these values to the [Configuration.h](./Marlin-1.1.x/Marlin/Configuration.h)
 ```
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 100, 100, 400, 95 }
 
 ```
+in case you use different pullies and belts and micro stepping, then you need to calculate the values
 #### DEFAULT MAX FEEDRATE - Line 618
 ```
-#define DEFAULT_MAX_FEEDRATE          { 3000, 3000, 500, 10000 }
+#define DEFAULT_MAX_FEEDRATE          { 8000, 8000, 3000, 10000 }
 ```
 
 #### DEFAULT MAX ACCELERATION - Line 626
 ```
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 500, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 8000, 8000, 3000, 10000 }
 ```
 
 #### Use Z MIN PIN for Probe - Line 677
@@ -321,41 +363,6 @@ You need to customize your starting GCODE to do the following before any prints
 ## 8. Thing To Print To Make Your 3D Printer Look better
 1. [Geeetech Prusa i3 Electronics Cover](https://www.thingiverse.com/thing:2194218)
 ![](https://cdn.thingiverse.com/renders/c1/54/d4/74/eb/6b62c0eae72f31f23106261cbc709f32_preview_featured.jpg "Geeetech Prusa i3 Electronics Cover")
-
-```
-#define X_STEP_PIN          15
-#define X_DIR_PIN           21
-#define X_MIN_PIN           18
-
-#define Y_STEP_PIN          22
-#define Y_DIR_PIN           23
-#define Y_MIN_PIN           19
-
-#define Z_STEP_PIN          3
-#define Z_DIR_PIN           2
-#define Z_MIN_PIN           20
-
-#define E0_STEP_PIN         1
-#define E0_DIR_PIN          0
-
-#define LED_PIN             27
-
-#define FAN_PIN             4
-
-#define HEATER_0_PIN        13  // extruder
-
-#define HEATER_BED_PIN      10  // bed (change to 12 for breakout pin on header)
-#define X_ENABLE_PIN        14
-#define Y_ENABLE_PIN        14
-#define Z_ENABLE_PIN        26
-#define E0_ENABLE_PIN       14
-
-#define TEMP_0_PIN          7   // Analogue pin
-#define TEMP_BED_PIN        6   // Analogue pin
-#define SDSS                31
-
-#define SLAVE_CLOCK         16
-```
 
 ### References
 [Developer Of Melzi](https://github.com/reprappro/melzi)
