@@ -60,20 +60,26 @@
 #endif
 
 //
+// Define Filament Runout Pin
+//
+//#define FIL_RUNOUT_PIN      
+
+
+//
 // Limit Switches
 //
-#define X_STOP_PIN         18
-#define Y_STOP_PIN         19
-#define Z_STOP_PIN         20
+#define X_STOP_PIN          18
+#define Y_STOP_PIN          19
+#define Z_STOP_PIN          20
 
 //
 // Steppers
 //
-#define X_STEP_PIN         15
-#define X_DIR_PIN          21
+#define X_STEP_PIN          15
+#define X_DIR_PIN           21
 
-#define Y_STEP_PIN         22
-#define Y_DIR_PIN          23
+#define Y_STEP_PIN          22
+#define Y_DIR_PIN           23
 
 #define Z_STEP_PIN          3
 #define Z_DIR_PIN           2
@@ -90,15 +96,15 @@
 //
 // Heaters / Fans
 //
-#define HEATER_0_PIN       13   // (extruder)
+#define HEATER_0_PIN        13   // (extruder)
 
 #if ENABLED(SANGUINOLOLU_V_1_2)
 
-  #define HEATER_BED_PIN   12   // (bed)
-  #define X_ENABLE_PIN     14
-  #define Y_ENABLE_PIN     14
-  #define Z_ENABLE_PIN     26
-  #define E0_ENABLE_PIN    14
+  #define HEATER_BED_PIN    12   // (bed)
+  #define X_ENABLE_PIN      14
+  #define Y_ENABLE_PIN      14
+  #define Z_ENABLE_PIN      26
+  #define E0_ENABLE_PIN     14
 
   #if !defined(FAN_PIN) && ENABLED(LCD_I2C_PANELOLU2)
     #define FAN_PIN         4   // Uses Transistor1 (PWM) on Panelolu2's Sanguino Adapter Board to drive the fan
