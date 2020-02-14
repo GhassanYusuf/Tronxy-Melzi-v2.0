@@ -1,4 +1,6 @@
 # TRONXY - Add Auto Leveling !
+> Written by Ghassan Yusuf
+
 ![](./images/01.jpg)
 
 ## My Story
@@ -22,7 +24,7 @@ This 3D printer comes equipped with the following
 * ATX Power Supply 12V 15Amps
 * Cables Connector For All (Steppers, End Stops, Heaters, Fans, Thermistors)
 
-## Follow The Steps To Add Auto Leveling Feature
+## Follow the steps to add auto leveling feature
 1. Software Pre request
   * You must have VSCode installed or [download](https://code.visualstudio.com/download) it and install it
   * You must install [Platform IO on VSCode](https://youtu.be/CB8qC_-RHQI)
@@ -73,23 +75,23 @@ now we need to move to the next step to test the probe behavior
 ## 3. Install the probe by connecting it to the board
 Turn the 3D printer power on, Install the probe in the Z end stop connector,  like the following picture ![](./images/32.jpg)
 
-Then To test the probe do the following
+Then to test the probe do the following
 1. Keep away from any metallic object, the probe light should be turned off.
 2. Put the probe very close to a metallic object the probe light will turn on.
 
 see the result in the following picture it should be what you get exactly
 ![](./images/34.png)
 
-Now, Its time to test the result with GCODE commands
+Now, Its time to test the result with **GCODE commands**
 
-1. Keep away from any metallic object, the probe light should be turned off, and in the command line terminal M119 then press enter, on the terminal the printer replies with the end stop status (OPEN) or (H) which means High
-2. Put the probe very close to a metallic object the probe light will turn on, and in the command line terminal M119 then press enter, on the terminal the printer replies with the end stop status (CLOSE) or (L) which means Low
+1. Keep away from any metallic object, the probe light should be turned off, and in the command line terminal **M119** then press enter, on the terminal the printer replies with the end stop status (**OPEN**) or (**H**) which means High
+2. Put the probe very close to a metallic object the probe light will turn on, and in the command line terminal **M119** then press enter, on the terminal the printer replies with the end stop status (**CLOSE**) or (**L**) which means Low
 
   * if that's the case, Then you are read to move on to the next step, preparing to burn Marlin firmware on to your board.
   * if that's not the case, Then please check you circuit connections or your 3 pin JST connector if the wires are in the correct order.
 
 ## 4. Burning a bootloader in to Melzi v2 board with Anet A8 (opti boot)
-The board that you have originally don't have a bootloader, so it cant talk to your compiler to burn the firmware via USB like the Arduino does, so in order to make it accept new firmware through USB. we have to download some files to make Arduino environment to recognize the board as (Anet A8)
+The board that you have originally don't have a bootloader, so it cant talk to your compiler to burn the firmware via USB like the Arduino does, so in order to make it accept new firmware through USB. we have to download some files to make Arduino environment to recognize the board as (Anet A8) [Click Here To Download The Files Needed](https://github.com/SkyNet3D/anet-board)
 
 ## 5. Configuring Marlin
 if you have bought the very same 3D printer with same T2 belts and same pully, here are some value you need to put in [Configuration.h](./Marlin-1.1.x/Marlin/Configuration.h) file in marlin folder to get the right movement distances.
@@ -181,7 +183,8 @@ in case you use different pullies and belts and micro stepping, then you need to
 ```
 
 #### Probe Offset Parameters - Line 776 to 795
-here you have to install the probe and measure the distance between the center point of the probe to the center point of the nozzle, and set X_PROBE_OFFSET_FROM_EXTRUDER value and the MIN_PROBE_EDGE is the width or diameter of your probe and set the speed of MULTIPLE_PROBING to 2 because it will give you accurate readings.
+> here you have to install the probe and measure the distance between the center point of the probe to the center point of the nozzle, and set X_PROBE_OFFSET_FROM_EXTRUDER value and the MIN_PROBE_EDGE is the width or diameter of your probe and set the speed of MULTIPLE_PROBING to 2 because it will give you accurate readings.
+
 ```
 #define X_PROBE_OFFSET_FROM_EXTRUDER -39  // X offset: -left  +right  [of the nozzle]
 #define Y_PROBE_OFFSET_FROM_EXTRUDER 0  // Y offset: -front +behind [the nozzle]
@@ -289,7 +292,8 @@ here you have to install the probe and measure the distance between the center p
 ```
 
 #### AUTO BED LEVELING LINEAR Settings - Line 1020 to 1028
-if you want to probe for mare points on the bed adjust GRID_MAX_POINTS_X and GRID_MAX_POINTS_Y to your desired values or else leave it as it is
+> if you want to probe for mare points on the bed adjust GRID_MAX_POINTS_X and GRID_MAX_POINTS_Y to your desired values or else leave it as it is
+
 ```
 // Set the number of grid points per dimension.
 #define GRID_MAX_POINTS_X 3
@@ -343,15 +347,17 @@ if you want to probe for mare points on the bed adjust GRID_MAX_POINTS_X and GRI
 ```
 
 #### LCD Controller Selection - Line
-In case you have the LCD Screen Like Me With 5 Buttons & 20x4 Lines Display
+> In case you have the LCD Screen Like Me With 5 Buttons & 20x4 Lines Display
+
 ```
 #define ZONESTAR_LCD
 ```
 
 #### End Of Configuration Process
-After Setting All These Parameters Upload It To Your Board
+Save the file, and move on to the next step, uploading the firmware to your board
 
 ## 6. Uploading Compiled Marlin Firmware
+
 
 ## 7. Tips For 3D Printing From Now On
 You need to customize your starting GCODE to do the following before any prints
@@ -365,10 +371,7 @@ You need to customize your starting GCODE to do the following before any prints
 ![](https://cdn.thingiverse.com/renders/c1/54/d4/74/eb/6b62c0eae72f31f23106261cbc709f32_preview_featured.jpg "Geeetech Prusa i3 Electronics Cover")
 
 ### References
-[Developer Of Melzi](https://github.com/reprappro/melzi)
-
-[RepRap WiKi - Melzi](https://reprap.org/wiki/Melzi)
-
-[Geeetech WiKi - Melzi](http://www.geeetech.com/wiki/index.php/Melzi_V2.0)
-
-[Wiring Bl Touch - Melzi](https://www.antclabs.com/wiring3)
+* [Developer Of Melzi](https://github.com/reprappro/melzi) - Who created the board
+* [RepRap WiKi - Melzi](https://reprap.org/wiki/Melzi) - Documentation about the board
+* [Geeetech WiKi - Melzi](http://www.geeetech.com/wiki/index.php/Melzi_V2.0) - Documentation about the board from Geeetech
+* [Wiring Bl Touch - Melzi](https://www.antclabs.com/wiring3) - Walk through, Connecting a BLTouch to this board
