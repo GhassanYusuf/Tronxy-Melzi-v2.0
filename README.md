@@ -22,11 +22,11 @@ This 3D printer comes equipped with the following
 * ATX Power Supply 12V 15Amps
 * Cables Connector For All (Steppers, End Stops, Heaters, Fans, Thermistors)
 
-## 2nd Steps To Add Auto Leveling Feature
+## Follow The Steps To Add Auto Leveling Feature
 1. Software Pre request
-  * You must have VSCode installed or download it and install it
-  * You must install Platform IO on VSCode
-1. Build a voltage level translator circuit for the inductive auto leveling probe
+  * You must have VSCode installed or [download](https://code.visualstudio.com/download) it and install it
+  * You must install [Platform IO on VSCode](https://youtu.be/CB8qC_-RHQI)
+2. Build a voltage level translator circuit for the inductive auto leveling probe
   Bill Of materials (BOM) - Hardware Materials
   * Inductive NPN normally open probe type [SN04](./documents/sn04-datasheet.pdf)
   * Circuit [Strip Board](./images/19.jpg) or what ever you prefer
@@ -35,15 +35,23 @@ This 3D printer comes equipped with the following
   * [3 Pin JST Connector](./images/20.jpg) "you can cut the z end stop connector and use it but you will be missing one pin"
   * wild the circuit to the auto leveling probe wires and the connector for the board
   * heat shrink to cover the circuit board
-2. Install the probe by connecting it to the board
-3. Burning a bootloader in to [Melzi v2](https://reprap.org/wiki/Melzi) board with [Anet A8 (opti boot)](https://github.com/SkyNet3D/anet-board)
-4. Configuring [Marlin 1.1.9](https://github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)
-5. Uploading Successfully Compiled Marlin Firmware To Your 3D printer Controller Board
-6. Home the X, Y, Z axis Using G28 command.
-7. Finally - Adjust Z Offset
-8. Run Homing Command G28, Then Run Bilinear Auto Leveling Command G29 For Test
+3. Install the probe by connecting it to the board
+4. Burning a bootloader in to [Melzi v2](https://reprap.org/wiki/Melzi) board with [Anet A8 (opti boot)](https://github.com/SkyNet3D/anet-board)
+5. Configuring [Marlin 1.1.9](https://github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)
+6. Uploading Successfully Compiled Marlin Firmware To Your 3D printer Controller Board
+  * Home the X, Y, Z axis Using G28 command.
+  * Finally - Adjust Z Offset
+  * Run Homing Command G28, Then Run Bilinear Auto Leveling Command G29 For Test
+7. Tips For 3D Printing From Now On
+8. Thing To Print To Make Your 3D Printer Look better
 
-## Configuring Marlin
+## 2. Build a voltage level translator circuit
+
+## 3. Install the probe by connecting it to the board
+
+## 4. Burning a bootloader in to Melzi v2 board with Anet A8 (opti boot)
+
+## 5. Configuring Marlin
 if you have bought the very same 3D printer with same T2 belts and same pully, here are some value you need to put in Configuration.h file in marlin folder to get the right movement distances.
 
 ### Parameters To Change
@@ -301,14 +309,16 @@ In case you have the LCD Screen Like Me With 5 Buttons & 20x4 Lines Display
 #### End Of Configuration Process
 After Setting All These Parameters Upload It To Your Board
 
-## Tips For 3D Printing From Now On
+## 6. Uploading Compiled Marlin Firmware
+
+## 7. Tips For 3D Printing From Now On
 You need to customize your starting GCODE to do the following before any prints
 1. Preheat The BED and HOTEND corresponding to the material you are going to print with
 2. Run Homing Routine G28
 3. Run Auto Leveling Routine G29
 4. Start Your Object Printing
 
-## Thing To Print To Make Your 3D Printer Look better
+## 8. Thing To Print To Make Your 3D Printer Look better
 1. [Geeetech Prusa i3 Electronics Cover](https://www.thingiverse.com/thing:2194218)
 ![](https://cdn.thingiverse.com/renders/c1/54/d4/74/eb/6b62c0eae72f31f23106261cbc709f32_preview_featured.jpg "Geeetech Prusa i3 Electronics Cover")
 
