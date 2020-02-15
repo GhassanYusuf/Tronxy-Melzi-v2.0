@@ -26,8 +26,9 @@ This 3D printer comes equipped with the following
 
 ## Follow the steps to add auto leveling feature
 1. Software Pre request
-  * You must have VSCode installed or [download](https://code.visualstudio.com/download) it and install it
-  * You must install [Platform IO on VSCode](https://youtu.be/CB8qC_-RHQI)
+  * You must have **Arduino IDE** installed or [download](https://www.arduino.cc/download_handler.php?f=/arduino-1.8.12-windows.exe) it and install it
+  * You must have **VSCode** installed or [download](https://code.visualstudio.com/download) it and install it
+  * You must install [Platform IO](https://youtu.be/CB8qC_-RHQI) **on VSCode**
 2. Build a voltage level translator circuit for the inductive auto leveling probe
   Bill Of materials (BOM) - Hardware Materials
   * Inductive NPN normally open probe type [SN04](./documents/sn04-datasheet.pdf)
@@ -46,6 +47,14 @@ This 3D printer comes equipped with the following
   * Run Homing Command G28, Then Run Bilinear Auto Leveling Command G29 For Test
 7. Tips For 3D Printing From Now On
 8. Thing To Print To Make Your 3D Printer Look better
+
+## 1. Software Pre Request
+This is the beginning of our walkthrough we need several tools to be able to achieve many goals one step at a time. these software are going to help us do the following
+
+1. **Arduino IDE** - Will allow us to bur a bootloader on to our board
+2. **VSCode And Platform IO** - Will allow us to compile and burn the marlin firmware on to the board
+
+> now lets start with the hardware after installing the previous programs and making them ready for use.
 
 ## 2. Build a voltage level translator circuit
 When you purchase a SN04 probe, you have to know that it works on a different voltage level than your micro controller that runs your 3D printer, so connecting it directly will trigger the magic smoke and fry your board, that's why we need to build a voltage level translate between the probe output voltage to our micro controller voltage. there are many ways to do it but I built it as simple as possible and it works perfectly. you might get it with a 3 pin JST connector
@@ -91,7 +100,66 @@ Now, Its time to test the result with **GCODE commands**
   * if that's not the case, Then please check you circuit connections or your 3 pin JST connector if the wires are in the correct order.
 
 ## 4. Burning a bootloader in to Melzi v2 board with Anet A8 (opti boot)
+
+#### Step 1 - Prepare An Arduino Board To Work As an ISP Programmer
+Now, In this step we need to grab an **Arduino UNO** to make it work as an ISP programmer, in order to burn **Anet A8 (Obti boot)** on the board before burning the marlin firmware.
+
+Head To ( File -> Examples -> Arduino ISP )
+![](./images/35.png)
+
+Head To ( Tools -> Boards -> Arduino/Genuino Uno)
+![](./images/36.png)
+
+Head To ( Tools -> Port -> Select Arduino Available Port )
+![](./images/37.png)
+
+Then Below The Menu Bar Click Tick Sign To Compile, If Successfully Compiled With no errors, Then click the arrow sign next to the tick sign and wait for Arduino to report Done Uploading Sketch.
+
+#### Step 2 - Download The Nessesary Of The Boot Loader & Install It On Arduino IDE
 The board that you have originally don't have a bootloader, so it cant talk to your compiler to burn the firmware via USB like the Arduino does, so in order to make it accept new firmware through USB. we have to download some files to make Arduino environment to recognize the board as (Anet A8) [Click Here To Download The Files Needed](https://github.com/SkyNet3D/anet-board)
+
+![](./images/38.png)
+
+Then unzip head to the hardware folder within copy the anet folder
+
+![](./images/39.png)
+
+Head to this location on your hard drive ( C:\Program Files (x86)\Arduino\hardware ) and past the anet folder there
+
+![](./images/40.png)
+
+Restart Arduino IDE, so the changes will take place, Head to ( Boards -> Anet V1.0 (Optiboot))
+
+![](./images/41.png)
+
+#### Step 3 - Connect ISP Wires From Arduino Uno To Your Board
+
+Now connect the SPI wires between **Arduino Uno** and your board as the following
+
+* Arduino 5V -> MelziV2 ICSP 5V
+* Arduino Pin 13 (SCK) -> MelziV2 ICSP (SCK)
+* Arduino Pin 12 (MISO) -> MelziV2 ICSP (MISO)
+* Arduino Pin 11 (MOSI) -> MelziV2 ICSP (MOSI)
+* Arduino Pin 10 (SS) -> MelziV2 ICSP (RESET)
+* Arduino GND -> MelziV2 ICSP GND
+
+Arduino SPI Pinout
+![](./images/45.png)
+
+Melzi V2 ICSP Connector
+![](./images/44.png "Melzi V2.0 ICSP Connector")
+
+#### Step 4 - Select The Anet A8 Board & Select The Programmer (Arduino as ISP)
+
+Head to ( Boards -> Programmer -> Arduino as ISP )
+
+![](./images/42.png)
+
+Then click the arrow next to the tick sign to burn optiboot to your board - done
+
+![](./images/43.png)
+
+at this point after burning the bootloader to your board you no longer need the **Arduino UNO** connected to your board, disconnect **Arduino UNO** and connect the USB cable directly to your board.
 
 ## 5. Configuring Marlin
 if you have bought the very same 3D printer with same T2 belts and same pully, here are some value you need to put in [Configuration.h](./Marlin-1.1.x/Marlin/Configuration.h) file in marlin folder to get the right movement distances.
