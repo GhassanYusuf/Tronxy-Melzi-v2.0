@@ -105,12 +105,15 @@ Now, Its time to test the result with **GCODE commands**
 Now, In this step we need to grab an **Arduino UNO** to make it work as an ISP programmer, in order to burn **Anet A8 (Obti boot)** on the board before burning the marlin firmware.
 
 Head To ( File -> Examples -> Arduino ISP )
+
 ![](./images/35.png)
 
 Head To ( Tools -> Boards -> Arduino/Genuino Uno)
+
 ![](./images/36.png)
 
 Head To ( Tools -> Port -> Select Arduino Available Port )
+
 ![](./images/37.png)
 
 Then Below The Menu Bar Click Tick Sign To Compile, If Successfully Compiled With no errors, Then click the arrow sign next to the tick sign and wait for Arduino to report Done Uploading Sketch.
