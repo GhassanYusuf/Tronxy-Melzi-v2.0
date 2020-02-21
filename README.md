@@ -118,7 +118,7 @@ Head To ( Tools -> Port -> Select Arduino Available Port )
 
 Then Below The Menu Bar Click Tick Sign To Compile, If Successfully Compiled With no errors, Then click the arrow sign next to the tick sign and wait for Arduino to report Done Uploading Sketch.
 
-#### Step 2 - Download The Nessesary Of The Boot Loader & Install It On Arduino IDE
+#### Step 2 - Download The Necessary Files Of The Boot Loader & Install It On Arduino IDE
 The board that you have originally don't have a bootloader, so it cant talk to your compiler to burn the firmware via USB like the Arduino does, so in order to make it accept new firmware through USB. we have to download some files to make Arduino environment to recognize the board as (Anet A8) [Click Here To Download The Files Needed](https://github.com/SkyNet3D/anet-board)
 
 ![](./images/38.png)
@@ -158,13 +158,39 @@ Head to ( Boards -> Programmer -> Arduino as ISP )
 
 ![](./images/42.png)
 
-Then click the arrow next to the tick sign to burn optiboot to your board - done
+make sure that you selected every thing like (Step1) Then click the Burn bootloader (Step2) to burn optiboot to your board - done
 
 ![](./images/43.png)
 
 at this point after burning the bootloader to your board you no longer need the **Arduino UNO** connected to your board, disconnect **Arduino UNO** and connect the USB cable directly to your board.
 
 ## 5. Configuring Marlin
+
+### Preparing Visual Studio Code Environment
+Start Visual Studio code, and make sure you installed Platform I/O previously, If you haven't installed platform I/O yet please click here to see how to install Platform I/O then continue with this tutorial
+
+![](./images/46.png)
+
+![](./images/47.png)
+
+1. File -> Open Project Folder
+
+![](./images/48.png)
+
+Head to the folder you downloaded and navigate to marlin-1.1.x
+
+then click select folder
+
+2. Head to file platform.ini
+
+![](./images/49.png)
+
+change the content to be same as number 2, to make the compiler recognize the board micro controller
+
+3. Head to [Configuration.h](./Marlin-1.1.x/Marlin/Configuration.h) File
+
+![](./images/50.png)
+
 if you have bought the very same 3D printer with same T2 belts and same pully, here are some value you need to put in [Configuration.h](./Marlin-1.1.x/Marlin/Configuration.h) file in marlin folder to get the right movement distances.
 
 ### Parameters To Change
@@ -194,12 +220,12 @@ These are some fixed parameters based on TRONXY 3D Printer build
 ```
 #### Thermal Settings - Line 313 to 319
 ```
-#define TEMP_SENSOR_0 5
+#define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
-#define TEMP_SENSOR_BED 5
+#define TEMP_SENSOR_BED 1
 #define TEMP_SENSOR_CHAMBER 0
 ```
 #### Mechanical End Stops - Line 530 to 537
@@ -429,9 +455,30 @@ Save the file, and move on to the next step, uploading the firmware to your boar
 
 ## 6. Uploading Compiled Marlin Firmware
 
+1. Compile the Code
+2. Check If The File Compiled Successfully
+3. On this step assuming you got it compiled successfully -> make sure that the USB cable is connected between your computer and your 3D printer board -> Click The Arrow To Start Uploading The Firmware.
 
-## 7. Tips For 3D Printing From Now On
-You need to customize your starting GCODE to do the following before any prints
+![](./images/51.png)
+
+Once Finished You can connect to your 3D printer software before you start printing preferably using the following software (click the names so you can download them if you don't have them and install them)
+
+* [Pronterface - Pronterface](http://kliment.kapsi.fi/printrun/Printrun-win-18Nov2017.zip) "Don't require Installation Just Unzip And Run The Red Exe File"
+* [Repetier-Host](http://download.repetier.com/files/host/win/setupRepetierHost_2_1_6.exe) "Installation Required"
+
+Connect to your 3D printer by selecting the baud rate you have specified in the [Configuration.h](./Marlin-1.1.x/Marlin/Configuration.h) on line# 126 and then select the USB port. Click Connect. Here You are connected And done with this step now its time to set the Z Offset.
+
+### Adjusting Z offset
+
+  1. Preheat Your HOTEND and Heated BED
+  2. Using Commands Text Box Do The following
+    * Type G28 and press SEND Button "The Printer Will Home X, Y Axis And Finally will move to the center of the bed and try to Home Z"
+  3. At this point the sensor will detect your bead but your nozzle will not be touching the bed.
+    * Type 
+
+## 7. Tips & Good Practice For 3D Printing From Now On
+since you are going to use the auto leveling sensor, you have to know that metals expand when Heated up, so if you do auto leveling before heating the bed it might give you wrong results that may cause you the loss of your print. so take the following steps in every print. You need to customize your starting GCODE to do the following before any prints
+
 1. Preheat The BED and HOTEND corresponding to the material you are going to print with
 2. Run Homing Routine G28
 3. Run Auto Leveling Routine G29
