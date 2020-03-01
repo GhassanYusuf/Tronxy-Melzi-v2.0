@@ -474,7 +474,7 @@ Connect to your 3D printer by selecting the baud rate you have specified in the 
   2. Using Commands Text Box Do The following
     * Type G28 and press SEND Button "The Printer Will Home X, Y Axis And Finally will move to the center of the bed and try to Home Z"
   3. At this point the sensor will detect your bead but your nozzle will not be touching the bed.
-    * Type 
+    * Type
 
 ## 7. Tips & Good Practice For 3D Printing From Now On
 since you are going to use the auto leveling sensor, you have to know that metals expand when Heated up, so if you do auto leveling before heating the bed it might give you wrong results that may cause you the loss of your print. so take the following steps in every print. You need to customize your starting GCODE to do the following before any prints
@@ -483,6 +483,42 @@ since you are going to use the auto leveling sensor, you have to know that metal
 2. Run Homing Routine G28
 3. Run Auto Leveling Routine G29
 4. Start Your Object Printing
+
+These steps can be done, by Starting GCODE.
+
+### Starting GCODE
+```
+; Pefix G-Code for most 200mm x 200mm 3D printers by www.DIY3DTech.com to clean nozzle
+; Place as start G-Code in Slicer
+; Use of this code is at your own risk (no warranties made or implied)
+
+M117 Clean                ; Indicate nozzle clean in progress on LCD
+M107                      ; Turn layer fan off
+G21                       ; Set to metric [change to G20 if you want Imperial]
+G90                       ; Force coordinates to be absolute relative to the origin
+G28                       ; Home X/Y/Z axis
+G29                       ; Auto Leveling The Bed
+G0 X1 Y1 Z0.15 F2500      ; Move in 1mm from edge and up [z] 0.15mm
+G92 E0                    ; Set extruder to [0] zero
+G1 X190 E50 F500          ; Extrude 100mm Filament along X axis 190mm long to prime and clean the nozzle
+G92 E0                    ; Reset extruder to [0] zero end of cleaning run
+G1 E-3 F500               ; Retract Filament by 3 mm to reduce string effect
+G1 X190 Y1 Z15 F2500      ; Move over and rise to safe Z height
+
+; Recommend turning off SKIRT in the slicer to avoid strings pulled into first layer
+; Begin printing with sliced GCODE after here
+```
+
+### Ending GCODE
+```
+M117 Finished             ; Indicate nozzle clean in progress on LCD
+M104 S0
+M140 S0
+G92 E1                    ; Retract the filament
+G1 E-1 F300               ; Retract -1 mm Feed rate 300 mm/s
+G0 X0 Y210 F2500          ; Move The Plate To The Front For Easier Part Removal
+M84                       ; Turn Off Steppers
+```
 
 ## 8. Thing To Print To Make Your 3D Printer Look better
 1. [Geeetech Prusa i3 Electronics Cover](https://www.thingiverse.com/thing:2194218)
