@@ -1,4 +1,4 @@
-# TRONXY - Add Auto Leveling !
+rise# TRONXY - Add Auto Leveling !
 > Written by Ghassan Yusuf
 
 ![](./images/01.jpg)
@@ -474,7 +474,19 @@ Connect to your 3D printer by selecting the baud rate you have specified in the 
   2. Using Commands Text Box Do The following
     * Type G28 and press SEND Button "The Printer Will Home X, Y Axis And Finally will move to the center of the bed and try to Home Z"
   3. At this point the sensor will detect your bead but your nozzle will not be touching the bed.
-    * Type
+  4. Do the following steps
+```
+  G1 X110 Y110 Z5 F3000 ; move to the center of your bed
+  M211          ; gives the status
+  M211 S0       ; disable software limits off -> now you can only use your Panel to Lower the Nozzle to the bed.
+  M114          ; this gives you your status where are you at (x, y, z position)
+  M114          ; TO KNOW THE REAL VALUE OF THE OFFSET
+  M851 Z-0.4    ; TO SET THE OFFSET VALUE For Example -0.4 Is Our Offset
+  M500          ; TO SAVE TO EEPROM
+  M503          ; MAKE SURE THE OFFSET IS STORED CORRECT
+```
+
+  Now you are done and ready for 3D printing congratulation.
 
 ## 7. Tips & Good Practice For 3D Printing From Now On
 since you are going to use the auto leveling sensor, you have to know that metals expand when Heated up, so if you do auto leveling before heating the bed it might give you wrong results that may cause you the loss of your print. so take the following steps in every print. You need to customize your starting GCODE to do the following before any prints
