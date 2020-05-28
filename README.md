@@ -480,7 +480,6 @@ Connect to your 3D printer by selecting the baud rate you have specified in the 
   M211          ; gives the status
   M211 S0       ; disable software limits off -> now you can only use your Panel to Lower the Nozzle to the bed.
   M114          ; this gives you your status where are you at (x, y, z position)
-  M114          ; TO KNOW THE REAL VALUE OF THE OFFSET
   M851 Z-0.4    ; TO SET THE OFFSET VALUE For Example -0.4 Is Our Offset
   M500          ; TO SAVE TO EEPROM
   M503          ; MAKE SURE THE OFFSET IS STORED CORRECT
