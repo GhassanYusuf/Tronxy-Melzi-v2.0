@@ -475,10 +475,16 @@ Connect to your 3D printer by selecting the baud rate you have specified in the 
     * Type G28 and press SEND Button "The Printer Will Home X, Y Axis And Finally will move to the center of the bed and try to Home Z"
   3. At this point the sensor will detect your bead but your nozzle will not be touching the bed.
   4. Do the following steps
+  
 ```
   G1 X110 Y110 Z5 F3000 ; move to the center of your bed
   M211          ; gives the status
   M211 S0       ; disable software limits off -> now you can only use your Panel to Lower the Nozzle to the bed.
+```
+ 
+ 5. Take a small peace of paper put it between the nozel and the bed, then using the printer panel select -> prepare -> move axis ->  Z axis -> move 0.1 mm -> rotate the knobe counter clock wise untill the nozel touches the paper and have a slite grip on it. then move on with the following.
+ 
+```
   M114          ; this gives you your status where are you at (x, y, z position)
   M851 Z-0.4    ; TO SET THE OFFSET VALUE For Example -0.4 Is Our Offset
   M500          ; TO SAVE TO EEPROM
