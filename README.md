@@ -472,7 +472,7 @@ Connect to your 3D printer by selecting the baud rate you have specified in the 
 
   1. Preheat Your HOTEND and Heated BED
   2. Using Commands Text Box Do The following
-    * Type G28 and press SEND Button "The Printer Will Home X, Y Axis And Finally will move to the center of the bed and try to Home Z"
+    a. Type G28 and press SEND Button "The Printer Will Home X, Y Axis And Finally will move to the center of the bed and try to Home Z"
   3. At this point the sensor will detect your bead but your nozzle will not be touching the bed.
   4. Do the following steps
   
