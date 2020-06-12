@@ -471,8 +471,7 @@ Connect to your 3D printer by selecting the baud rate you have specified in the 
 ### Adjusting Z offset
 
   1. Preheat Your HOTEND and Heated BED
-  2. Using Commands Text Box Do The following
-    a. Type G28 and press SEND Button "The Printer Will Home X, Y Axis And Finally will move to the center of the bed and try to Home Z"
+  2. Using Commands Text Box Do The following -> Type G28 and press SEND Button "The Printer Will Home X, Y Axis And Finally will move to the center of the bed and try to Home Z"
   3. At this point the sensor will detect your bead but your nozzle will not be touching the bed.
   4. Do the following steps
   
@@ -491,7 +490,25 @@ Connect to your 3D printer by selecting the baud rate you have specified in the 
   M503          ; MAKE SURE THE OFFSET IS STORED CORRECT
 ```
 
+### Auto tune PID for the heater
+
+1. Make sure you hotend it cold.
+2. Using the command line on prontor face type -> M303 S240
+
+this will command the auto tune algorithm to heat up the nozel 8 time from room temperature up to 240 degrees celisious, then it will generate 3 perameters to se for you printer KP, KI, KD
+
+```
+#define DEFAULT_Kp 16.19
+#define DEFAULT_Ki 1.33
+#define DEFAULT_Kd 49.38
+```
+3. Now using the comand line insert the values like the following -> M301 P16.90 I1.33 D49.38 -> M500 to store the settings
+
   Now you are done and ready for 3D printing congratulation.
+
+### Calibrating Extruder Steps/mm
+
+
 
 ## 7. Tips & Good Practice For 3D Printing From Now On
 since you are going to use the auto leveling sensor, you have to know that metals expand when Heated up, so if you do auto leveling before heating the bed it might give you wrong results that may cause you the loss of your print. so take the following steps in every print. You need to customize your starting GCODE to do the following before any prints
