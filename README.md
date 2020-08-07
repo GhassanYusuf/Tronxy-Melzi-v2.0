@@ -507,8 +507,15 @@ this will command the auto tune algorithm to heat up the nozel 8 time from room 
   Now you are done and ready for 3D printing congratulation.
 
 ### Calibrating Extruder Steps/mm
-
-
+To begin, send the command **M503** to your printer. This will return a string of values to your monitor. Find the line that starts with echo: **M92**, then find the E-value (which is usually at the end of this line). This is the current steps/mm value.
+Now for the physical steps/mm value. First, we need to know how much filament was actually extruded. We can find this by measuring the distance from the extruder to the mark on the filament, then subtracting that value from 120:
+    **120 – [length from extruder to mark] = [actual length extruded]**
+Next, we need to know how many steps the extruder took to extrude that much filament. We can determine this value by multiplying the steps/mm value by the length we should have extruded, in this case 100 mm:
+    **[steps/mm value] x 100 = [steps taken]**
+Using this, we can obtain the physical, correct steps/mm value by dividing by the length extruded:
+    **[steps taken] / [actual length extruded] = [accurate steps/mm value]**
+Now all we have to do is set this as the printer’s steps/mm value, and we should be good to go!
+(Reference)[https://all3dp.com/2/extruder-calibration-6-easy-steps-2/]
 
 ## 7. Tips & Good Practice For 3D Printing From Now On
 since you are going to use the auto leveling sensor, you have to know that metals expand when Heated up, so if you do auto leveling before heating the bed it might give you wrong results that may cause you the loss of your print. so take the following steps in every print. You need to customize your starting GCODE to do the following before any prints
